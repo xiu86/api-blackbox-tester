@@ -19,7 +19,7 @@
 | --- | --- |
 | `api-blackbox-tester` | 统一入口，根据用户意图选择并串联三个测试阶段。 |
 | `api-blackbox-test-planner` | 输出编码前或执行前的接口黑盒测试方案，并写入 `测试方案.md`。 |
-| `api-blackbox-test-executor` | 执行真实接口请求，使用 `db-mcp` 准备或校验数据，并写入 `执行记录.md`。 |
+| `api-blackbox-test-executor` | 执行真实接口请求，使用 [`db-mcp`](https://github.com/xiu86/db-mcp) 准备或校验数据，并写入 `执行记录.md`。 |
 | `api-blackbox-test-reporter` | 汇总方案和执行证据，输出覆盖率、风险和发布建议，并写入 `测试报告.md`。 |
 
 ## 快速开始
@@ -67,7 +67,7 @@ tests/【需求】_YYYYMMDD/测试报告.md
 - 用于规划阶段的项目源码或 API 文档。
 - 用于执行阶段的可访问测试环境。
 - 受保护接口所需的凭证或 token。
-- 需要数据库准备或校验时，配置 `db-mcp`。
+- 需要数据库准备或校验时，配置 [`db-mcp`](https://github.com/xiu86/db-mcp)。
 - HTTP 接口通常使用 `curl`，gRPC 接口通常使用 `grpcurl`。
 
 执行阶段不得在未确认安全的环境中运行破坏性测试，也不得默认修改生产或疑似生产数据。
