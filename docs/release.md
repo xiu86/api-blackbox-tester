@@ -22,8 +22,12 @@
    - planner 输出包含用例 ID 和链路 ID。
    - executor 输出包含请求证据和数据库证据。
    - reporter 输出能引用 planner 范围和 executor 证据。
-6. 确认 README 和 docs 已描述新的行为。
-7. 按目标 Codex 插件分发方式打包或发布。
+6. 验证三个阶段都明确写入对应文件：
+   - `tests/【需求】_YYYYMMDD/测试方案.md`
+   - `tests/【需求】_YYYYMMDD/执行记录.md`
+   - `tests/【需求】_YYYYMMDD/测试报告.md`
+7. 确认 README 和 docs 已描述新的行为。
+8. 按目标 Codex 插件分发方式打包或发布。
 
 ## 手工验证场景
 
@@ -36,3 +40,5 @@
 ```
 
 如果 reporter 无法将 executor 证据关联回 planner 的用例 ID 或链路 ID，则不应发布。
+
+如果任一阶段只在对话中输出结果、没有写入对应 Markdown 文件，也不应发布。

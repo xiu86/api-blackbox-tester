@@ -1,7 +1,7 @@
 interface:
   display_name: "接口测试执行"
   short_description: "编码后执行真实接口请求和数据库校验"
-  default_prompt: "使用 $api-blackbox-test-executor 按测试用例执行真实接口请求并用 db-mcp 校验。"
+  default_prompt: "使用 $api-blackbox-test-executor 按测试用例执行真实接口请求并用 db-mcp 校验，保存到 tests/【需求】_YYYYMMDD/执行记录.md。"
 dependencies:
   tools:
     - type: "mcp"
