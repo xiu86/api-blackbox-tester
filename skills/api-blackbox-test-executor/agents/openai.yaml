@@ -1,0 +1,11 @@
+interface:
+  display_name: "接口测试执行"
+  short_description: "编码后执行真实接口请求和数据库校验"
+  default_prompt: "使用 $api-blackbox-test-executor 按测试用例执行真实接口请求并用 db-mcp 校验。"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "db-mcp"
+      description: "用于准备接口测试数据，并在真实请求后验证数据库状态。"
+policy:
+  allow_implicit_invocation: true

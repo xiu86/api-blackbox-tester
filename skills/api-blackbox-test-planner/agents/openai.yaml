@@ -1,0 +1,6 @@
+interface:
+  display_name: "接口测试方案规划"
+  short_description: "编码前输出接口黑盒测试方案"
+  default_prompt: "使用 $api-blackbox-test-planner 输出接口黑盒测试范围、用例、数据计划和编排链路。"
+policy:
+  allow_implicit_invocation: true
