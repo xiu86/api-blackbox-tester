@@ -7,7 +7,7 @@
 如果希望 Codex 自动判断当前需要哪个阶段，使用统一入口：
 
 ```text
-使用 $api-blackbox-tester 编排接口黑盒测试的方案、执行和报告。
+使用 $api-blackbox-tester 编排接口黑盒测试的方案、评审、执行和报告。
 ```
 
 如果已经明确需要某个阶段，可以直接使用对应 Skill：
@@ -15,6 +15,7 @@
 | 需求 | Skill |
 | --- | --- |
 | 测试范围、用例、边界测试、安全测试、接口编排方案 | `$api-blackbox-test-planner` |
+| 四角色测试用例评审、执行前门禁、退回 planner 完善意见 | `$api-blackbox-test-reviewer` |
 | 真实 HTTP/gRPC 执行、curl 证据、数据库校验 | `$api-blackbox-test-executor` |
 | 覆盖率、测试结论、失败汇总、发布建议 | `$api-blackbox-test-reporter` |
 
@@ -45,16 +46,45 @@ planner 应输出：
 tests/【需求】_YYYYMMDD/测试方案.md
 ```
 
-## 阶段二：执行验证
+## 阶段二：测试用例评审
 
 示例提示词：
 
 ```text
-使用 $api-blackbox-test-executor 按下面测试方案执行真实接口请求。
+使用 $api-blackbox-test-reviewer 评审下面测试方案，判断是否允许进入 executor。
+测试方案:
+<粘贴 planner 输出>
+```
+
+reviewer 由四个角色分别提出意见：
+
+- 资深测试工程师。
+- 资深产品经理。
+- 资深软件工程师。
+- 安全工程师。
+
+reviewer 必须先输出各角色独立意见，再进行小组讨论博弈，最终给出一致结论：通过、有条件通过、不通过或阻塞。只有通过或有条件通过才允许进入 executor；不通过时必须退回 planner 完善测试方案后重新评审。
+
+reviewer 会按风险分级做覆盖矩阵、需求追踪、可执行性 preflight、安全建模和 Anti-Happy-Path 检测。核心、写入、鉴权、敏感数据等高风险接口会触发更严格门禁；低风险接口允许说明不适用或豁免原因，避免机械套用固定配额。
+
+本阶段必须写入：
+
+```text
+tests/【需求】_YYYYMMDD/测试用例评审.md
+```
+
+## 阶段三：执行验证
+
+示例提示词：
+
+```text
+使用 $api-blackbox-test-executor 按下面测试方案和评审结论执行真实接口请求。
 base URL: http://127.0.0.1:10008
 鉴权方式: Bearer token，token 已在环境中准备
 测试方案:
 <粘贴 planner 输出>
+测试用例评审:
+<粘贴 reviewer 输出>
 ```
 
 executor 需要以下信息：
@@ -64,6 +94,7 @@ executor 需要以下信息：
 - 必需的 token 或凭证。
 - 需要数据库准备或校验时的数据库实例信息。
 - 创建或复用测试数据的授权。
+- 测试用例评审结果为通过或有条件通过。
 
 executor 应记录：
 
@@ -81,15 +112,18 @@ executor 应记录：
 tests/【需求】_YYYYMMDD/执行记录.md
 ```
 
-## 阶段三：测试报告
+## 阶段四：测试报告
 
 示例提示词：
 
 ```text
-使用 $api-blackbox-test-reporter 根据下面测试方案和执行证据输出最终报告：
+使用 $api-blackbox-test-reporter 根据下面测试方案、评审结论和执行证据输出最终报告：
 
 测试方案:
 <粘贴 planner 输出>
+
+测试用例评审:
+<粘贴 reviewer 输出>
 
 执行证据:
 <粘贴 executor 输出>
@@ -105,7 +139,7 @@ tests/【需求】_YYYYMMDD/测试报告.md
 
 ## 文件输出规范
 
-三个阶段默认在项目根目录下使用同一个需求目录：
+四个阶段默认在项目根目录下使用同一个需求目录：
 
 ```text
 tests/【需求】_YYYYMMDD/
@@ -117,6 +151,7 @@ tests/【需求】_YYYYMMDD/
 - `YYYYMMDD` 使用执行当天日期，例如 `20260428`；如果用户明确指定日期，以用户指定日期为准。
 - 文件名中的 `/`、空格、冒号、引号等不适合作为路径的字符应替换为 `_`。
 - executor 和 reporter 应优先复用前序阶段已经创建的目录。
+- reviewer 必须复用 planner 目录；executor 必须复用通过或有条件通过的 reviewer 目录。
 - 每个阶段完成后，回复中必须给出对应文件路径。
 
 ## 证据记录建议

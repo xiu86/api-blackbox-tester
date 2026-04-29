@@ -18,12 +18,14 @@
 2. 更新 `CHANGELOG.md`。
 3. 检查所有变更过的 `SKILL.md` front matter 是否准确。
 4. 检查所有变更过的 `agents/openai.yaml` 中的提示词和依赖声明是否一致。
-5. 验证三阶段交付物仍然可以衔接：
+5. 验证四阶段交付物仍然可以衔接：
    - planner 输出包含用例 ID 和链路 ID。
-   - executor 输出包含请求证据和数据库证据。
-   - reporter 输出能引用 planner 范围和 executor 证据。
-6. 验证三个阶段都明确写入对应文件：
+   - reviewer 沿用用例 ID 和链路 ID，并输出评审结论、退回项和执行关注项。
+   - executor 在 reviewer 通过或有条件通过后输出请求证据和数据库证据。
+   - reporter 输出能引用 planner 范围、reviewer 结论和 executor 证据。
+6. 验证四个阶段都明确写入对应文件：
    - `tests/【需求】_YYYYMMDD/测试方案.md`
+   - `tests/【需求】_YYYYMMDD/测试用例评审.md`
    - `tests/【需求】_YYYYMMDD/执行记录.md`
    - `tests/【需求】_YYYYMMDD/测试报告.md`
 7. 确认 README 和 docs 已描述新的行为。
@@ -35,10 +37,11 @@
 
 ```text
 使用 $api-blackbox-test-planner 输出测试方案。
-使用 $api-blackbox-test-executor 按测试方案执行真实请求。
-使用 $api-blackbox-test-reporter 根据方案和证据输出报告。
+使用 $api-blackbox-test-reviewer 评审测试方案。
+使用 $api-blackbox-test-executor 在评审通过后按测试方案执行真实请求。
+使用 $api-blackbox-test-reporter 根据方案、评审结论和证据输出报告。
 ```
 
-如果 reporter 无法将 executor 证据关联回 planner 的用例 ID 或链路 ID，则不应发布。
+如果 reviewer 无法将评审意见关联回 planner 的用例 ID 或链路 ID，或 reporter 无法将 executor 证据关联回 planner 的用例 ID 或链路 ID，则不应发布。
 
 如果任一阶段只在对话中输出结果、没有写入对应 Markdown 文件，也不应发布。
