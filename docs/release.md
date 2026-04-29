@@ -23,6 +23,7 @@
    - reviewer 沿用用例 ID 和链路 ID，并输出评审结论、退回项和执行关注项。
    - executor 在 reviewer 通过或有条件通过后输出请求证据和数据库证据。
    - reporter 输出能引用 planner 范围、reviewer 结论和 executor 证据。
+   - reporter 非通过结论能输出根因分析、解决建议、责任阶段和复验范围。
 6. 验证四个阶段都明确写入对应文件：
    - `tests/【需求】_YYYYMMDD/测试方案.md`
    - `tests/【需求】_YYYYMMDD/测试用例评审.md`
@@ -43,5 +44,7 @@
 ```
 
 如果 reviewer 无法将评审意见关联回 planner 的用例 ID 或链路 ID，或 reporter 无法将 executor 证据关联回 planner 的用例 ID 或链路 ID，则不应发布。
+
+如果 reporter 对失败、部分通过、阻塞或剩余风险没有输出根因分析、解决建议和复验范围，则不应发布。
 
 如果任一阶段只在对话中输出结果、没有写入对应 Markdown 文件，也不应发布。

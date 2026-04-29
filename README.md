@@ -3,7 +3,7 @@
 > 用于阶段化接口黑盒测试的 Codex 插件：编码前出方案，执行前评审测试用例，编码后执行真实 HTTP/gRPC 验证，最后生成基于证据的测试报告。
 
 [![许可证：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](LICENSE)
-[![版本](https://img.shields.io/badge/version-0.2.3-0F766E.svg)](.codex-plugin/plugin.json)
+[![版本](https://img.shields.io/badge/version-0.3.0-0F766E.svg)](.codex-plugin/plugin.json)
 
 ## 项目定位
 
@@ -21,7 +21,7 @@
 | `api-blackbox-test-planner` | 输出编码前或执行前的接口黑盒测试方案，并写入 `测试方案.md`。 |
 | `api-blackbox-test-reviewer` | 由资深测试工程师、资深产品经理、资深软件工程师、安全工程师四个角色评审测试用例，并写入 `测试用例评审.md`。 |
 | `api-blackbox-test-executor` | 执行真实接口请求，使用 [`db-mcp`](https://github.com/xiu86/db-mcp) 准备或校验数据，并写入 `执行记录.md`。 |
-| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出覆盖率、风险和发布建议，并写入 `测试报告.md`。 |
+| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出覆盖率、根因分析、解决建议、复验计划、风险和发布建议，并写入 `测试报告.md`。 |
 
 ## 快速开始
 
@@ -47,6 +47,7 @@
 3. 评审通过或有条件通过后，使用 `api-blackbox-test-executor` 执行真实 HTTP 或 gRPC 请求；评审不通过时回到 planner 完善后重新评审。
 4. 将 planner 输出、reviewer 结论和 executor 证据提供给 `api-blackbox-test-reporter`。
 5. 根据最终报告判断变更是通过、阻塞、部分通过还是失败。
+6. 如果测试报告结论不是通过，按报告中的根因分析和解决建议回到开发修复或解除阻塞，修复后重新执行接口复验并再次生成报告，直到结论为通过或明确阻塞无法继续。
 
 ## 文件输出规范
 

@@ -1,7 +1,7 @@
 interface:
   display_name: "接口黑盒测试助手"
   short_description: "编排接口黑盒测试四阶段流程"
-  default_prompt: "使用 $api-blackbox-tester 编排接口黑盒测试的方案、评审、执行和报告，并将四个阶段分别保存到 tests/【需求】_YYYYMMDD/。"
+  default_prompt: "使用 $api-blackbox-tester 编排接口黑盒测试的方案、评审、执行和报告；如果报告结论不是通过，按根因和建议回到开发修复，再执行接口复验和报告再评估，并将阶段文件保存到 tests/【需求】_YYYYMMDD/。"
 dependencies:
   tools:
     - type: "mcp"
