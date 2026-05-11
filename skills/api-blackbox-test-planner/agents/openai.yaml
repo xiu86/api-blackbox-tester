@@ -1,6 +1,6 @@
 interface:
   display_name: "接口测试方案规划"
-  short_description: "编码前输出接口黑盒测试方案"
-  default_prompt: "使用 $api-blackbox-test-planner 输出接口黑盒测试范围、用例、数据计划和编排链路，并保存到 tests/【需求】_YYYYMMDD/测试方案.md。"
+  short_description: "编码前输出测试范围、影响初判和字段语义矩阵"
+  default_prompt: "使用 $api-blackbox-test-planner 先基于需求分析和技术方案输出测试范围、直接影响和潜在扩散影响，再输出接口 x 字段语义等价类矩阵、跨接口一致性用例、测试用例、数据计划和编排链路，并保存到 tests/【需求】_YYYYMMDD/测试方案.md。"
 policy:
   allow_implicit_invocation: true

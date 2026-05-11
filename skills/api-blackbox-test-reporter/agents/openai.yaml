@@ -1,6 +1,6 @@
 interface:
   display_name: "接口测试报告"
-  short_description: "汇总证据、根因建议和复验计划"
-  default_prompt: "使用 $api-blackbox-test-reporter 根据测试方案、测试用例评审结论和执行证据输出覆盖率评估和测试报告；非通过结论必须包含根因分析、解决建议和复验计划，保存到 tests/【需求】_YYYYMMDD/测试报告.md。"
+  short_description: "汇总证据、矩阵覆盖、根因建议和复验计划"
+  default_prompt: "使用 $api-blackbox-test-reporter 根据测试方案、测试用例评审结论和执行证据输出覆盖率评估和测试报告；响应前读取最新测试 artifact 判定闭环状态，任一必测矩阵单元未执行不得结论通过，非通过结论必须自动进入开发修复、最小验证、自动编译/重启最多 3 次、复验和报告再评估闭环，保存到 tests/【需求】_YYYYMMDD/测试报告.md。"
 policy:
   allow_implicit_invocation: true

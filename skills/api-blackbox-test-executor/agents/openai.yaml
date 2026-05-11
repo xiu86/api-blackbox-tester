@@ -1,7 +1,7 @@
 interface:
   display_name: "接口测试执行"
-  short_description: "评审通过后执行真实接口请求和数据库校验"
-  default_prompt: "使用 $api-blackbox-test-executor 在测试用例评审通过后执行真实接口请求并用 db-mcp 校验，保存到 tests/【需求】_YYYYMMDD/执行记录.md。"
+  short_description: "核对影响范围覆盖后执行真实接口测试"
+  default_prompt: "使用 $api-blackbox-test-executor 在测试用例评审通过后，先核对需求/技术方案识别的测试范围、直接影响和公共方法/关联接口等扩散影响是否已被测试方案、矩阵单元和编排链路覆盖；缺失时输出补充测试要求或补充用例草案，关键缺口回 planner，非关键补证项回 reviewer，通过后再执行真实接口请求、回填矩阵单元状态、执行跨接口一致性用例并用 db-mcp 校验，保存到 tests/【需求】_YYYYMMDD/执行记录.md。"
 dependencies:
   tools:
     - type: "mcp"
