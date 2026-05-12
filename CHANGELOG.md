@@ -4,6 +4,22 @@
 
 本项目遵循语义化版本。
 
+## [0.4.0] - 2026-05-12
+
+### 新增
+
+- planner 增加影响范围初判，要求记录直接影响、潜在扩散影响、证据来源和高/中/低置信度。
+- reviewer 增加独立评审模板 `references/review-template.md`，集中维护评分模型、Must Pass、Reject If 和输出结构。
+- executor 增加执行记录模板 `references/execution-template.md`，集中维护请求记录、矩阵回填、跨接口一致性、编排链路、DB 验证和清理状态格式。
+- tester 增加共享闭环状态文件 `references/loop-state.md`，统一闭环优先级、状态机和最新 artifact 判定算法。
+
+### 变更
+
+- 非通过报告闭环调整为自动进入 `开发修复 -> 最小验证/单测 -> 自动编译/重启最多 3 次 -> executor 复验 -> reporter 再评估`，仅在自动编译/重启失败或缺少权限时进入 `FIXED_WAIT_RESTART`。
+- executor 发现测试范围缺口时，不再直接执行原方案；关键范围缺口回 planner 完整补方案，非关键补证项回 reviewer 评审。
+- reporter 和 tester 共用闭环状态定义，避免 artifact 判定和状态机逻辑分叉。
+- reviewer 主 Skill 精简为流程和规则摘要，详细评分与模板下沉到 reference，降低维护成本。
+
 ## [0.3.0] - 2026-04-29
 
 ### 新增
