@@ -3,7 +3,7 @@
 > 用于阶段化接口黑盒测试的 Codex 插件：编码前出方案，执行前评审测试用例，编码后执行真实 HTTP/gRPC 验证，最后生成基于证据的测试报告。
 
 [![许可证：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](LICENSE)
-[![版本](https://img.shields.io/badge/version-0.4.0-0F766E.svg)](.codex-plugin/plugin.json)
+[![版本](https://img.shields.io/badge/version-0.4.1-0F766E.svg)](.codex-plugin/plugin.json)
 
 ## 项目定位
 

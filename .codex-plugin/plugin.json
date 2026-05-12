@@ -1,6 +1,6 @@
 {
   "name": "api-blackbox-tester",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "用于编排接口黑盒测试全流程的 Codex 插件，包含编码前方案、测试用例评审、编码后执行、最终报告四个阶段 Skill；支持影响范围置信度、共享闭环状态、自动修复复验和阶段文件输出。",
   "author": {
     "name": "xiu86",
