@@ -3,7 +3,7 @@
 > 用于阶段化接口黑盒测试的 Codex 插件：编码前出方案，执行前评审测试用例，编码后执行真实 HTTP/gRPC 验证，最后生成基于证据的测试报告。
 
 [![许可证：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](LICENSE)
-[![版本](https://img.shields.io/badge/version-0.4.2-0F766E.svg)](.codex-plugin/plugin.json)
+[![版本](https://img.shields.io/badge/version-0.5.0-0F766E.svg)](.codex-plugin/plugin.json)
 
 ## 项目定位
 
@@ -21,7 +21,7 @@
 | `api-blackbox-test-planner` | 输出编码前或执行前的接口黑盒测试方案，包含影响范围初判、证据来源、置信度、字段语义矩阵和编排链路，并写入 `测试方案.md`。 |
 | `api-blackbox-test-reviewer` | 由资深测试工程师、资深产品经理、资深软件工程师、安全工程师四个角色评审测试用例；使用独立评审模板输出评分、门禁结论和退回项，并写入 `测试用例评审.md`。 |
 | `api-blackbox-test-executor` | 执行真实接口请求，使用 [`db-mcp`](https://github.com/xiu86/db-mcp) 准备或校验数据；按执行模板记录请求、矩阵回填、跨接口一致性、编排链路和 DB 验证，并写入 `执行记录.md`。 |
-| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出覆盖率、根因分析、解决建议、闭环执行状态、复验计划、风险和发布建议，并写入 `测试报告.md`。 |
+| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出用例汇总、覆盖率、根因分析、解决建议、闭环执行状态、复验计划、风险和发布建议，写入 `测试报告.md` 并在终端同步摘要。 |
 
 ## 快速开始
 
@@ -37,7 +37,7 @@
 使用 $api-blackbox-test-planner 输出接口黑盒测试范围、影响范围初判、用例、数据计划和编排链路。
 使用 $api-blackbox-test-reviewer 对 planner 输出的测试用例做执行前评审。
 使用 $api-blackbox-test-executor 在评审通过后按已有测试用例执行真实接口请求并用 db-mcp 校验。
-使用 $api-blackbox-test-reporter 根据测试方案、评审结论和执行证据输出覆盖率评估和测试报告。
+使用 $api-blackbox-test-reporter 根据测试方案、评审结论和执行证据输出用例汇总、覆盖率评估和测试报告。
 ```
 
 ## 标准流程
@@ -56,6 +56,7 @@
 - `api-blackbox-test-reviewer` 使用 `skills/api-blackbox-test-reviewer/references/review-template.md` 维护评分模型、Must Pass、Reject If 和完整评审输出模板。
 - `api-blackbox-test-executor` 使用 `skills/api-blackbox-test-executor/references/execution-template.md` 维护执行记录模板。
 - `api-blackbox-test-reporter` 使用 `skills/api-blackbox-test-reporter/references/report-template.md` 维护报告模板。
+- reporter 写入报告后必须在终端同步输出报告路径、用例汇总、未通过根因、覆盖率摘要、最终结论、下一步动作和剩余风险，且与报告内容一致。
 
 ## 文件输出规范
 
