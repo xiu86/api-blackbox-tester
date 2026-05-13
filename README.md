@@ -3,7 +3,7 @@
 > 用于阶段化接口黑盒测试的 Codex 插件：编码前出方案，执行前评审测试用例，编码后执行真实 HTTP/gRPC 验证，最后生成基于证据的测试报告。
 
 [![许可证：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](LICENSE)
-[![版本](https://img.shields.io/badge/version-0.4.1-0F766E.svg)](.codex-plugin/plugin.json)
+[![版本](https://img.shields.io/badge/version-0.4.2-0F766E.svg)](.codex-plugin/plugin.json)
 
 ## 项目定位
 
@@ -47,11 +47,12 @@
 3. 评审通过或有条件通过后，使用 `api-blackbox-test-executor` 执行真实 HTTP 或 gRPC 请求；执行前如果发现直接影响或扩散影响未覆盖，关键缺口回 planner，非关键补证项回 reviewer。
 4. 将 planner 输出、reviewer 结论和 executor 证据提供给 `api-blackbox-test-reporter`。
 5. 根据最终报告判断变更是通过、阻塞、部分通过还是失败。
-6. 如果测试报告结论不是通过，按报告中的根因分析和解决建议自动进入 `开发修复 -> 最小验证/单测 -> 自动编译/重启最多 3 次 -> executor 复验 -> reporter 再评估`；只有自动编译/重启 3 次失败或缺少必要权限/外部控制面时，才进入 `FIXED_WAIT_RESTART` 等待用户确认。
+6. 如果测试报告结论不是通过，当前流程不得完成：失败进入开发修复，部分通过补齐缺口，阻塞先自动解除；只有 agent 已尝试自动解除且缺口必须由用户或外部系统提供时，才进入 `WAIT_USER_INPUT` 暂停态。用户提供输入后必须回到 executor 复验，再由 reporter 重新评估。
 
 ## 闭环和模板
 
 - `api-blackbox-tester` 和 `api-blackbox-test-reporter` 共用 `skills/api-blackbox-tester/references/loop-state.md`，统一闭环状态机和最新 artifact 判定算法。
+- 只有测试报告结论为通过时闭环完成；阻塞不是完成态，`WAIT_USER_INPUT` 和 `FIXED_WAIT_RESTART` 都只是暂停态。
 - `api-blackbox-test-reviewer` 使用 `skills/api-blackbox-test-reviewer/references/review-template.md` 维护评分模型、Must Pass、Reject If 和完整评审输出模板。
 - `api-blackbox-test-executor` 使用 `skills/api-blackbox-test-executor/references/execution-template.md` 维护执行记录模板。
 - `api-blackbox-test-reporter` 使用 `skills/api-blackbox-test-reporter/references/report-template.md` 维护报告模板。
