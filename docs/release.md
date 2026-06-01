@@ -19,10 +19,11 @@
 3. 检查所有变更过的 `SKILL.md` front matter 是否准确。
 4. 检查所有变更过的 `agents/openai.yaml` 中的提示词和依赖声明是否一致。
 5. 验证四阶段交付物仍然可以衔接：
-   - planner 输出包含用例 ID 和链路 ID。
-   - reviewer 沿用用例 ID 和链路 ID，并输出评审结论、退回项和执行关注项。
-   - executor 在 reviewer 通过或有条件通过后输出请求证据和数据库证据。
-   - reporter 输出能引用 planner 范围、reviewer 结论和 executor 证据。
+   - planner 输出包含业务场景 ID、场景覆盖单元 ID、用例 ID 和链路 ID。
+   - reviewer 沿用业务场景 ID、场景覆盖单元 ID、用例 ID 和链路 ID，并输出评审结论、退回项和执行关注项。
+   - executor 在 reviewer 通过或有条件通过后输出请求证据、场景覆盖执行状态和数据库证据。
+   - reporter 输出能引用 planner 范围、业务场景、reviewer 结论和 executor 证据。
+   - reporter 通过结论前执行自动门禁脚本，并输出测试结果可信度评分。
    - reporter 非通过结论能输出根因分析、解决建议、责任阶段和复验范围。
 6. 验证四个阶段都明确写入对应文件：
    - `tests/【需求】_YYYYMMDD/测试方案.md`

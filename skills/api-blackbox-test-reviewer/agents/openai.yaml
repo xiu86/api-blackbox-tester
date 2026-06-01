@@ -1,6 +1,6 @@
 interface:
   display_name: "测试用例评审"
-  short_description: "四角色按影响范围和矩阵单元评审测试用例"
-  default_prompt: "使用 $api-blackbox-test-reviewer 评审 planner 输出的测试用例、接口 x 字段语义等价类矩阵和跨接口一致性用例；资深软件工程师必须先基于需求分析和技术方案判断测试范围，再追踪公共方法、共享组件、关联接口等扩散影响，资深测试工程师必须与测试方案编写者做结构化对抗性辩论，保存到 tests/【需求】_YYYYMMDD/测试用例评审.md；通过后再进入 executor，不通过则退回 planner 完善。"
+  short_description: "四角色按业务场景、影响范围和矩阵单元评审测试用例"
+  default_prompt: "使用 $api-blackbox-test-reviewer 评审 planner 输出的业务场景拆解、场景 x 边界/异常覆盖矩阵、测试用例、接口 x 字段语义等价类矩阵和跨接口一致性用例；资深软件工程师必须先基于需求分析和技术方案判断测试范围，再追踪公共方法、共享组件、关联接口等扩散影响，资深测试工程师必须与测试方案编写者做结构化对抗性辩论；核心业务场景只有 Happy Path 或缺少适用边界/异常覆盖时不得通过，保存到 tests/【需求】_YYYYMMDD/测试用例评审.md；通过后再进入 executor，不通过则退回 planner 完善。"
 policy:
   allow_implicit_invocation: true
