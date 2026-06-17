@@ -1,0 +1,1 @@
+{"direct_routes":[{"method":"POST","path":"/api/users"}],"indirect_routes":[{"method":"GET","path":"/api/users/{id}"}],"similar_routes":[]}

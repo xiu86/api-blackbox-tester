@@ -1,0 +1,35 @@
+stages:
+  planner:
+    artifact: "测试方案.md"
+    next: reviewer
+  reviewer:
+    artifact: "测试用例评审.md"
+    requires: planner
+    next: executor
+  executor:
+    artifact: "执行记录.md"
+    requires: reviewer
+    next: reporter
+  reporter:
+    artifact: "测试报告.md"
+    requires: executor
+
+review_results:
+  pass:
+    - "通过"
+    - "有条件通过"
+  fail:
+    - "不通过"
+    - "阻塞"
+
+report_conclusions:
+  pass: "通过"
+  fail: "失败"
+  partial: "部分通过"
+  blocked: "阻塞"
+
+fallbacks:
+  missing_planner_scope: planner
+  missing_review_gate: reviewer
+  missing_execution_evidence: executor
+  non_pass_report: reporter

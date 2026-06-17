@@ -1,6 +1,6 @@
 interface:
   display_name: "接口测试报告"
-  short_description: "汇总证据、成果、业务场景覆盖、可信度和复验计划"
-  default_prompt: "使用 $api-blackbox-test-reporter 根据测试方案、测试用例评审结论和执行证据输出覆盖率评估和测试报告；报告和终端都必须输出用例汇总（计划、已执行、通过、未通过、跳过、阻塞、未执行）、测试成果汇报（已执行测试用例、发现 Bug、已修复 Bug、复验通过 Bug、待修复 Bug、阻塞 Bug、疑似 Bug、非 Bug 风险）、业务场景覆盖、场景 x 边界/异常覆盖、未通过根因简述、测试结果可信度评分和最终结论；响应前读取最新测试 artifact 判定闭环状态，运行 api-blackbox-tester/scripts/validate_test_artifacts.py 和 check_report_gate.py，任一必测矩阵单元或必测场景覆盖单元未执行不得结论通过，非通过结论必须自动进入开发修复、最小验证、自动编译/重启最多 3 次、复验和报告再评估闭环，保存到 tests/【需求】_YYYYMMDD/测试报告.md。"
+  short_description: "汇总证据、成果、覆盖可信度、证据可信度和复验计划"
+  default_prompt: "使用 $api-blackbox-test-reporter 根据测试方案、多角色评审结论和执行证据输出覆盖率评估和测试报告；报告和终端都必须输出用例汇总（计划、已执行、通过、未通过、跳过、阻塞、未执行）、测试成果汇报（已执行测试用例、发现 Bug、已修复 Bug、复验通过 Bug、待修复 Bug、阻塞 Bug、疑似 Bug、非 Bug 风险）、业务场景覆盖、场景 x 边界/异常覆盖、证据包完整性、未通过根因简述、覆盖可信度、证据可信度、综合可信度和最终结论；响应前读取最新测试 artifact 判定非通过闭环状态，运行 scripts/validate_all.py 以及兼容脚本 validate_test_artifacts.py 和 check_report_gate.py，任一必测矩阵单元或必测场景覆盖单元未执行、核心证据包缺失、只有 HTTP 200 无业务断言时不得结论通过，非通过结论必须自动进入开发修复、最小验证、自动编译/重启最多 3 次、复验和报告再评估闭环，保存到 tests/【需求】_YYYYMMDD/测试报告.md。"
 policy:
   allow_implicit_invocation: true

@@ -1,0 +1,125 @@
+artifacts:
+  "测试方案.md":
+    sections:
+      "结构化路由影响分析":
+        required: true
+        min_rows: 1
+        columns:
+          - "分析方式"
+          - "工具或来源"
+          - "是否可用"
+          - "结构化输出"
+          - "置信度"
+          - "兜底方式"
+      "变更代码影响接口清单":
+        required: true
+        min_rows: 1
+        columns:
+          - "变更文件/符号"
+          - "变更类型"
+          - "直接影响接口"
+          - "间接受影响接口/逻辑类似接口"
+          - "调用方/消费者/任务"
+          - "影响依据"
+          - "是否纳入测试范围"
+          - "覆盖方式"
+          - "置信度"
+      "测试范围":
+        required: true
+      "影响范围初判":
+        required: true
+        min_rows: 1
+      "业务场景拆解":
+        required: true
+        min_rows: 1
+      "风险驱动用例生成矩阵":
+        required: true
+        min_rows: 1
+      "接口 x 字段语义等价类矩阵":
+        required: true
+        min_rows: 1
+      "场景 x 边界/异常覆盖矩阵":
+        required: true
+        min_rows: 1
+      "测试用例":
+        required: true
+        min_rows: 1
+      "断言计划":
+        required: true
+        min_rows: 1
+      "测试数据计划":
+        required: true
+      "跨接口一致性测试":
+        required: true
+      "接口编排/集成测试":
+        required: true
+  "测试用例评审.md":
+    sections:
+      "结构化路由影响分析评审":
+        required: true
+        min_rows: 1
+      "变更代码影响接口清单评审":
+        required: true
+        min_rows: 1
+      "多角色评审结论矩阵":
+        required: true
+        min_rows: 5
+      "角色冲突与裁决":
+        required: true
+      "业务场景拆解评审":
+        required: true
+      "场景 x 边界/异常覆盖矩阵评审":
+        required: true
+      "接口 x 字段语义等价类矩阵评审":
+        required: true
+      "Anti-Happy-Path Gate":
+        required: true
+      "最终评审结果":
+        required: true
+  "执行记录.md":
+    sections:
+      "影响范围覆盖核对":
+        required: true
+      "单接口请求记录":
+        required: true
+        min_rows: 1
+      "断言执行记录":
+        required: true
+        min_rows: 1
+      "证据包":
+        required: true
+        min_rows: 1
+      "接口 x 字段语义等价类矩阵执行状态":
+        required: true
+        min_rows: 1
+      "场景 x 边界/异常覆盖完整性":
+        required: true
+        min_rows: 1
+      "跨接口一致性执行记录":
+        required: true
+      "接口编排链路执行记录":
+        required: true
+      "DB 验证记录":
+        required: true
+      "阻塞前自动补救记录":
+        required: true
+  "测试报告.md":
+    sections:
+      "测试执行汇总":
+        required: true
+      "编码前测试方案摘要":
+        required: true
+      "多角色评审摘要":
+        required: true
+      "证据完整性评估":
+        required: true
+      "接口 x 字段语义等价类矩阵执行完整性":
+        required: true
+      "场景 x 边界/异常覆盖完整性":
+        required: true
+      "覆盖率评估":
+        required: true
+      "覆盖与证据可信度评分":
+        required: true
+      "最终总结":
+        required: true

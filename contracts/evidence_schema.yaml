@@ -1,0 +1,27 @@
+evidence_packet:
+  required_columns:
+    - "证据包ID"
+    - "用例ID"
+    - "请求证据"
+    - "响应断言"
+    - "DB断言"
+    - "副作用断言"
+    - "环境证据"
+    - "清理证据"
+    - "证据完整性"
+
+assertion_record:
+  required_columns:
+    - "用例ID"
+    - "断言ID"
+    - "断言类型"
+    - "预期"
+    - "实际"
+    - "结果"
+    - "证据路径"
+
+db_evidence_required_for:
+  - "POST"
+  - "PUT"
+  - "PATCH"
+  - "DELETE"

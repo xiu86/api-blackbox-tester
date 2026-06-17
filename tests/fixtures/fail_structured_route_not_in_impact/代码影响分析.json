@@ -1,0 +1,1 @@
+{"direct_routes":[{"method":"DELETE","path":"/api/users/{id}"}],"indirect_routes":[],"similar_routes":[]}

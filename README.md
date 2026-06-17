@@ -3,7 +3,7 @@
 > 用于阶段化接口黑盒测试的 Codex 插件：编码前出方案，执行前评审测试用例，编码后执行真实 HTTP/gRPC 验证，最后生成基于证据的测试报告。
 
 [![许可证：MIT](https://img.shields.io/badge/%E8%AE%B8%E5%8F%AF%E8%AF%81-MIT-yellow.svg)](LICENSE)
-[![版本](https://img.shields.io/badge/version-0.6.1-0F766E.svg)](.codex-plugin/plugin.json)
+[![版本](https://img.shields.io/badge/version-0.7.0-0F766E.svg)](.codex-plugin/plugin.json)
 
 ## 项目定位
 
@@ -18,10 +18,10 @@
 | Skill | 作用 |
 | --- | --- |
 | `api-blackbox-tester` | 统一入口，根据用户意图选择并串联四个测试阶段；报告非通过时按共享闭环状态机继续修复、验证、复验和再报告。 |
-| `api-blackbox-test-planner` | 输出编码前或执行前的接口黑盒测试方案，包含影响范围初判、证据来源、置信度、业务场景拆解、场景 x 边界/异常覆盖矩阵、字段语义矩阵和编排链路，并写入 `测试方案.md`。 |
-| `api-blackbox-test-reviewer` | 由资深测试工程师、资深产品经理、资深软件工程师、安全工程师四个角色评审测试用例、业务场景拆解和场景边界覆盖；使用独立评审模板输出评分、门禁结论和退回项，并写入 `测试用例评审.md`。 |
-| `api-blackbox-test-executor` | 执行真实接口请求，使用 [`db-mcp`](https://github.com/xiu86/db-mcp) 准备或校验数据；按执行模板记录请求、矩阵回填、场景边界覆盖回填、跨接口一致性、编排链路和 DB 验证，并写入 `执行记录.md`。 |
-| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出用例汇总、测试成果汇报、覆盖率、业务场景覆盖、测试结果可信度、根因分析、解决建议、闭环执行状态、复验计划、风险和发布建议，写入 `测试报告.md` 并在终端同步摘要。 |
+| `api-blackbox-test-planner` | 输出编码前或执行前的接口黑盒测试方案，优先使用当前项目可用的结构化路由分析工具生成结构化路由影响分析；没有可用工具时退回代码 diff、路由定义、API 文档、代码搜索和 Agent 推理。方案包含变更代码影响接口清单、风险驱动用例生成矩阵、断言计划、证据采集计划、影响范围初判、业务场景拆解、场景 x 边界/异常覆盖矩阵、字段语义矩阵和编排链路，并写入 `测试方案.md`。 |
+| `api-blackbox-test-reviewer` | 由资深测试工程师、资深产品经理、资深软件工程师、安全工程师、测试证据审计员进行多角色评审，覆盖测试用例、业务场景拆解、变更代码影响接口清单、断言计划、证据包要求和场景边界覆盖；使用独立评审模板输出评分、门禁结论和退回项，并写入 `测试用例评审.md`。 |
+| `api-blackbox-test-executor` | 执行真实接口请求，使用 [`db-mcp`](https://github.com/xiu86/db-mcp) 准备或校验数据；按执行模板记录请求、断言执行记录、证据包、矩阵回填、场景边界覆盖回填、跨接口一致性、编排链路和 DB 验证，并写入 `执行记录.md`。 |
+| `api-blackbox-test-reporter` | 汇总方案、评审结论和执行证据，输出用例汇总、测试成果汇报、覆盖率、业务场景覆盖、覆盖可信度、证据可信度、综合可信度、根因分析、解决建议、非通过闭环状态、复验计划、风险和发布建议，写入 `测试报告.md` 并在终端同步摘要。 |
 
 ## 快速开始
 
@@ -42,8 +42,8 @@
 
 ## 标准流程
 
-1. 使用 `api-blackbox-test-planner` 分析需求、技术方案和项目上下文，输出测试范围、直接影响、潜在扩散影响、证据来源、置信度、业务场景拆解和场景边界覆盖。
-2. 使用 `api-blackbox-test-reviewer` 组织四角色评审测试用例、业务场景、数据计划、边界测试、安全测试和接口编排链路；低置信度影响项必须继续核实或补证。
+1. 使用 `api-blackbox-test-planner` 分析需求、技术方案、本次代码变更和项目上下文，优先选择当前项目可用的结构化路由分析工具，不限定具体工具；没有可用工具时退回代码 diff、路由定义、API 文档、代码搜索和 Agent 推理。随后把变更文件/符号映射到直接影响接口、间接受影响接口、逻辑类似接口和编排链路，再输出测试范围、直接影响、潜在扩散影响、证据来源、置信度、业务场景拆解和场景边界覆盖。
+2. 使用 `api-blackbox-test-reviewer` 组织多角色评审测试用例、变更代码影响接口清单、业务场景、数据计划、边界测试、安全测试和接口编排链路；低置信度影响项必须继续核实或补证，影响点关联接口未纳入测试范围且无豁免依据时不得通过。
 3. 评审通过或有条件通过后，使用 `api-blackbox-test-executor` 执行真实 HTTP 或 gRPC 请求；执行前如果发现直接影响或扩散影响未覆盖，关键缺口回 planner，非关键补证项回 reviewer。
 4. 将 planner 输出、reviewer 结论和 executor 证据提供给 `api-blackbox-test-reporter`。
 5. 根据最终报告判断变更是通过、阻塞、部分通过还是失败。
@@ -56,7 +56,7 @@
 - `api-blackbox-test-reviewer` 使用 `skills/api-blackbox-test-reviewer/references/review-template.md` 维护评分模型、Must Pass、Reject If 和完整评审输出模板。
 - `api-blackbox-test-executor` 使用 `skills/api-blackbox-test-executor/references/execution-template.md` 维护执行记录模板。
 - `api-blackbox-test-reporter` 使用 `skills/api-blackbox-test-reporter/references/report-template.md` 维护报告模板。
-- reporter 写入报告前必须运行自动门禁脚本；写入后必须在终端同步输出报告路径、用例汇总、测试成果汇报、未通过根因、覆盖率摘要、测试结果可信度评分、最终结论、下一步动作和剩余风险，且与报告内容一致。
+- reporter 写入报告前必须运行分层自动门禁脚本；写入后必须在终端同步输出报告路径、用例汇总、测试成果汇报、未通过根因、覆盖率摘要、覆盖可信度、证据可信度和综合可信度、最终结论、下一步动作和剩余风险，且与报告内容一致。
 
 ## 文件输出规范
 
@@ -111,6 +111,10 @@ tests/【需求】_YYYYMMDD/测试报告.md
 - [贡献指南](CONTRIBUTING.md)
 - [安全策略](SECURITY.md)
 - [变更日志](CHANGELOG.md)
+
+## 质量门禁
+
+插件使用 `contracts/` 定义工作流、artifact、评审角色、证据包和门禁规则；使用 `scripts/validate_all.py` 执行结构、结构化路由影响分析、内容、多角色评审、追踪、证据、通过门禁和非通过闭环校验。报告结论为通过前，覆盖可信度和证据可信度都必须满足门禁要求。
 
 ## 开发说明
 

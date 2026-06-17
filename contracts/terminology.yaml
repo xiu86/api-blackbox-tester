@@ -1,0 +1,28 @@
+execution_status:
+  - "已执行"
+  - "跳过"
+  - "阻塞"
+
+case_result:
+  - "通过"
+  - "失败"
+  - "阻塞"
+  - "跳过"
+
+review_result:
+  - "通过"
+  - "有条件通过"
+  - "不通过"
+  - "阻塞"
+
+report_conclusion:
+  - "通过"
+  - "失败"
+  - "部分通过"
+  - "阻塞"
+
+evidence_completeness:
+  - "完整"
+  - "部分完整"
+  - "缺失"
+  - "不适用"
